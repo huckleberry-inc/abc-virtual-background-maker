@@ -99,6 +99,12 @@
       transform-origin: bottom right;
     }
 
+    &.huckleberry {
+      top: 15%;
+      left: -1%;
+      transform-origin: top left;
+    }
+
     > li {
       margin: 0 0.5rem;
 
