@@ -102,7 +102,7 @@ const TextInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
       <Draggable
         defaultClassNameDragging={styles.dragging}
         nodeRef={dragRef}
-        disabled={window?.innerWidth < 768}
+        disabled={true}
         defaultPosition={defaultPosition}
         position={dragPosition}
         onStop={handleStop}
