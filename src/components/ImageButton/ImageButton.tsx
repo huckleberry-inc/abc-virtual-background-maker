@@ -60,14 +60,14 @@ const ImageButton = (props: Props) => {
     const initialOptions: Record<string, InputField> = {};
     inputFields.map(({ fields }) => {
       fields.map(
-        ({ label, fontSize, fontStyle = DEFAULT_FONT_STYLE, text }, index) => {
+        ({ label, fontSize, fontStyle = DEFAULT_FONT_STYLE, text }) => {
           initialOptions[label] = {
             label,
             fontStyle,
             fontSize,
             text,
             isVisible: true,
-            opacity: index === 0 ? 100 : 60,
+            opacity: 100,
           };
         },
       );
