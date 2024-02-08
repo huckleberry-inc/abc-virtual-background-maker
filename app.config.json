@@ -38,7 +38,7 @@
         },
         {
           "label": "name",
-          "fontSize": "medium",
+          "fontSize": "small",
           "fontStyle": "Montserrat",
           "offset": {
             "x": "0%",
@@ -79,7 +79,7 @@
             },
             {
               "label": "name",
-              "fontSize": "medium",
+              "fontSize": "small",
               "fontStyle": "Montserrat",
               "offset": {
                 "x": "0%",
