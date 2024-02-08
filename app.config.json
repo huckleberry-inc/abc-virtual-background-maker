@@ -23,13 +23,13 @@
   },
   "defaultInputFields": [
     {
-      "position": "top-left",
+      "position": "huckleberry",
       "direction": "column",
       "fields": [
         {
-          "label": "name",
-          "fontSize": "medium",
-          "fontStyle": "LINE Seed",
+          "label": "team or title",
+          "fontSize": "caption",
+          "fontStyle": "Montserrat",
           "offset": {
             "x": "0%",
             "y": "0%"
@@ -37,128 +37,29 @@
           "isRequired": true
         },
         {
-          "label": "team",
-          "fontSize": "small",
-          "fontStyle": "LINE Seed",
+          "label": "name",
+          "fontSize": "medium",
+          "fontStyle": "Montserrat",
           "offset": {
             "x": "0%",
             "y": "0%"
-          }
+          },
+          "isRequired": true
         },
         {
-          "label": "role",
-          "fontSize": "small",
-          "fontStyle": "LINE Seed",
+          "label": "email",
+          "fontSize": "caption",
+          "fontStyle": "Montserrat",
           "offset": {
             "x": "0%",
             "y": "0%"
-          }
+          },
+          "isRequired": true
         }
       ]
     }
   ],
   "themes": [
-    {
-      "name": "office"
-    },
-    {
-      "name": "nature",
-      "inputFields": [
-        {
-          "position": "top-right",
-          "direction": "column",
-          "fields": [
-            {
-              "label": "name",
-              "fontSize": "medium",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              },
-              "isRequired": true
-            },
-            {
-              "label": "team",
-              "fontSize": "small",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              }
-            },
-            {
-              "label": "role",
-              "fontSize": "small",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              }
-            }
-          ]
-        },
-        {
-          "position": "bottom-left",
-          "fields": [
-            {
-              "label": "Company",
-              "fontSize": "medium",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "texture",
-      "isNew": true,
-      "inputFields": [
-        {
-          "position": "top-center",
-          "direction": "row",
-          "fields": [
-            {
-              "label": "name",
-              "fontSize": "medium",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              },
-              "isRequired": true
-            },
-            {
-              "label": "role",
-              "fontSize": "small",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              }
-            }
-          ]
-        },
-        {
-          "position": "bottom-right",
-          "fields": [
-            {
-              "label": "Company",
-              "fontSize": "medium",
-              "fontStyle": "LINE Seed",
-              "offset": {
-                "x": "0%",
-                "y": "0%"
-              }
-            }
-          ]
-        }
-      ]
-    },
     {
       "name": "huckleberry",
       "inputFields": [
