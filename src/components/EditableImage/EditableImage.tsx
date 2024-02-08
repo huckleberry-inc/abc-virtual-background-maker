@@ -93,7 +93,8 @@ const EditableImage = forwardRef<HTMLDivElement, Props>((props, ref) => {
       } else if (
         position === "top-left" ||
         position === "center-left" ||
-        position === "bottom-left"
+        position === "bottom-left" ||
+        position === "huckleberry"
       ) {
         return "flex-start";
       } else {

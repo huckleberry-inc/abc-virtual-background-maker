@@ -19,7 +19,7 @@
       "small": "3rem",
       "caption": "1.5rem"
     },
-    "styles": ["LINE Seed"]
+    "styles": ["LINE Seed", "Montserrat"]
   },
   "defaultInputFields": [
     {
@@ -154,6 +154,47 @@
                 "x": "0%",
                 "y": "0%"
               }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "huckleberry",
+      "inputFields": [
+        {
+          "position": "huckleberry",
+          "direction": "column",
+          "fields": [
+            {
+              "label": "team or title",
+              "fontSize": "caption",
+              "fontStyle": "Montserrat",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "name",
+              "fontSize": "medium",
+              "fontStyle": "Montserrat",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "email",
+              "fontSize": "caption",
+              "fontStyle": "Montserrat",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
             }
           ]
         }

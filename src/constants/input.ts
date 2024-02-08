@@ -10,7 +10,8 @@ export interface InputFieldGroup {
     | "center-right"
     | "bottom-left"
     | "bottom-center"
-    | "bottom-right";
+    | "bottom-right"
+    | "huckleberry";
   fields: Array<InputField>;
 }
 export interface InputField {
