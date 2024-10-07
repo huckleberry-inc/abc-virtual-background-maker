@@ -11,7 +11,9 @@ export interface InputFieldGroup {
     | "bottom-left"
     | "bottom-center"
     | "bottom-right"
-    | "huckleberry";
+    | "hb"
+    | "hb-2024-1"
+    | "hb-2024-2";
   fields: Array<InputField>;
 }
 export interface InputField {

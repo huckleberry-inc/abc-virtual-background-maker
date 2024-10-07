@@ -17,13 +17,15 @@
       "medium": "4.5rem",
       "regular": "3.5rem",
       "small": "3rem",
-      "caption": "1.5rem"
+      "hb-small": "2rem",
+      "caption": "1.5rem",
+      "hb-mini": "0.9rem"
     },
     "styles": ["LINE Seed", "Montserrat"]
   },
   "defaultInputFields": [
     {
-      "position": "huckleberry",
+      "position": "hb",
       "direction": "column",
       "fields": [
         {
@@ -61,10 +63,10 @@
   ],
   "themes": [
     {
-      "name": "huckleberry",
+      "name": "HB",
       "inputFields": [
         {
-          "position": "huckleberry",
+          "position": "hb",
           "direction": "column",
           "fields": [
             {
@@ -94,6 +96,88 @@
               "offset": {
                 "x": "0%",
                 "y": "0%"
+              },
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HB-2024-1",
+      "inputFields": [
+        {
+          "position": "hb-2024-1",
+          "direction": "column",
+          "fields": [
+            {
+              "label": "team or title",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "name",
+              "fontSize": "hb-small",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "email",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "30%"
+              },
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HB-2024-2",
+      "inputFields": [
+        {
+          "position": "hb-2024-2",
+          "direction": "column",
+          "fields": [
+            {
+              "label": "team or title",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "name",
+              "fontSize": "hb-small",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "email",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "30%"
               },
               "isRequired": true
             }
