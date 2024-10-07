@@ -99,9 +99,21 @@
       transform-origin: bottom right;
     }
 
-    &.huckleberry {
+    &.hb {
       top: 15%;
       left: -1%;
+      transform-origin: top left;
+    }
+
+    &.hb-2024-1 {
+      top: 1%;
+      left: 0;
+      transform-origin: top left;
+    }
+
+    &.hb-2024-2 {
+      top: 14%;
+      left: -2%;
       transform-origin: top left;
     }
 
