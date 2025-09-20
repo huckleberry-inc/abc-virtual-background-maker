@@ -96,7 +96,10 @@ const EditableImage = forwardRef<HTMLDivElement, Props>((props, ref) => {
         position === "bottom-left" ||
         position === "hb" ||
         position === "hb-2024-1" ||
-        position === "hb-2024-2"
+        position === "hb-2024-2" ||
+        position === "hb-2025-1" ||
+        position === "hb-2025-2" ||
+        position === "hb-2025-3"
       ) {
         return "flex-start";
       } else {

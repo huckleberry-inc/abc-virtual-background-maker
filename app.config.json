@@ -104,6 +104,129 @@
       ]
     },
     {
+      "name": "HB-2025-1",
+      "inputFields": [
+        {
+          "position": "hb-2025-1",
+          "direction": "column",
+          "fields": [
+            {
+              "label": "team or title",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "name",
+              "fontSize": "hb-small",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "email",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "30%"
+              },
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HB-2025-2",
+      "inputFields": [
+        {
+          "position": "hb-2025-2",
+          "direction": "column",
+          "fields": [
+            {
+              "label": "team or title",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "name",
+              "fontSize": "hb-small",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "email",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "30%"
+              },
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HB-2025-3",
+      "inputFields": [
+        {
+          "position": "hb-2025-3",
+          "direction": "column",
+          "fields": [
+            {
+              "label": "team or title",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "name",
+              "fontSize": "hb-small",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "0%"
+              },
+              "isRequired": true
+            },
+            {
+              "label": "email",
+              "fontSize": "hb-caption",
+              "fontStyle": "LINE Seed",
+              "offset": {
+                "x": "0%",
+                "y": "30%"
+              },
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "HB-2024-1",
       "inputFields": [
         {
