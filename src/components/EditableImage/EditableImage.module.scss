@@ -117,6 +117,24 @@
       transform-origin: top left;
     }
 
+    &.hb-2025-1 {
+      top: 1%;
+      left: 0;
+      transform-origin: top left;
+    }
+
+    &.hb-2025-2 {
+      top: 22%;
+      left: -2%;
+      transform-origin: top left;
+    }
+
+    &.hb-2025-3 {
+      top: 32%;
+      left: -2%;
+      transform-origin: top left;
+    }
+
     > li {
       margin: 0 0.5rem;
 
