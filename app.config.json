@@ -11,6 +11,85 @@
     "type": "filesystem",
     "path": "backgrounds"
   },
+  "partnerLogo": {
+    "src": "./shopify-platinum-partner.svg",
+    "alt": "Shopify Platinum Partner",
+    "isVisible": true,
+    "placements": {
+      "nature/01.jpg": {
+        "position": "top-left",
+        "size": 0.09
+      },
+      "nature/02.jpg": {
+        "position": "top-left",
+        "size": 0.1
+      },
+      "nature/03.jpg": {
+        "position": "top-left",
+        "size": 0.085
+      },
+      "nature/04.jpg": {
+        "position": "top-left",
+        "size": 0.07
+      },
+      "nature/05.jpg": {
+        "position": "top-left",
+        "size": 0.095
+      },
+      "office/01.jpg": {
+        "position": "top-right",
+        "size": 0.095
+      },
+      "office/02.jpg": {
+        "position": "top-right",
+        "size": 0.1
+      },
+      "office/03.jpg": {
+        "position": "top-right",
+        "size": 0.1
+      },
+      "office/04.jpg": {
+        "position": "top-right",
+        "size": 0.1
+      },
+      "office/05.jpg": {
+        "position": "top-right",
+        "size": 0.095
+      },
+      "office/06.jpg": {
+        "position": "bottom-left",
+        "size": 0.095
+      },
+      "office/07.jpg": {
+        "position": "top-right",
+        "size": 0.07
+      },
+      "office/08.255,255,255.jpg": {
+        "position": "top-right",
+        "size": 0.065
+      },
+      "texture/01.jpg": {
+        "position": "top-right",
+        "size": 0.1
+      },
+      "texture/02.jpg": {
+        "position": "top-right",
+        "size": 0.1
+      },
+      "texture/03.jpg": {
+        "position": "top-right",
+        "size": 0.1
+      },
+      "texture/04.jpg": {
+        "position": "top-left",
+        "size": 0.085
+      },
+      "texture/05.jpg": {
+        "position": "top-right",
+        "size": 0.095
+      }
+    }
+  },
   "fonts": {
     "sizes": {
       "large": "6rem",
@@ -19,7 +98,9 @@
       "small": "3rem",
       "caption": "1.5rem"
     },
-    "styles": ["LINE Seed"]
+    "styles": [
+      "LINE Seed"
+    ]
   },
   "defaultInputFields": [
     {

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="200" viewBox="0 0 480 200">
+  <!--
+    PLACEHOLDER. Replace this file with the official Shopify tier badge (SVG)
+    downloaded from the Shopify Partner Dashboard. Keep the file name, or
+    change `partnerLogo.src` in app.config.json.
+  -->
+  <rect width="480" height="200" fill="#ffffff"/>
+  <rect x="6" y="6" width="468" height="188" fill="none" stroke="#000000" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="240" y="92" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#000000">PARTNER BADGE</text>
+  <text x="240" y="134" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#000000">Replace with the official SVG</text>
+</svg>
