@@ -8,7 +8,7 @@ export const PartnerLogoPositions = {
 export type PartnerLogoPosition = keyof typeof PartnerLogoPositions;
 
 export const PartnerLogoSizes = {
-  small: 0.065,
+  small: 0.07,
   medium: 0.08,
   large: 0.095,
 } as const;

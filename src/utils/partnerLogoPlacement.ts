@@ -18,7 +18,7 @@ export const PARTNER_LOGO_INSET = { x: 0.04, y: 0.064 };
 /** Clear space kept around the logo, as a fraction of the logo height. */
 const CLEAR_SPACE = 0.35;
 
-const MIN_SIZE = 0.06;
+const MIN_SIZE = 0.07;
 const MAX_SIZE = 0.1;
 
 /** Calmness thresholds: below LOW the area is treated as empty wall/sky. */
