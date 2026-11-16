@@ -22,13 +22,14 @@ import {
   useState,
 } from "react";
 
-import { DragAndDropFile, TextInput } from "@/components";
+import { DragAndDropFile, PartnerLogo, TextInput } from "@/components";
 import {
   Alignment,
   Font,
   FontSize,
   InputField,
   InputFieldGroup,
+  PartnerLogoPlacement,
 } from "@/constants";
 import { useAppConfiguration, useElementSize, useImageColor } from "@/hooks";
 import { convertHexToRgb } from "@/utils";
@@ -47,6 +48,12 @@ interface Props {
   focusedInput?: string;
   handleFocusInput?: (event: FocusEvent<HTMLDivElement>) => void;
   handleBlurInput?: (event: FocusEvent<HTMLDivElement>) => void;
+  partnerLogo?: {
+    src: string;
+    alt?: string;
+    aspect: number;
+    placement: PartnerLogoPlacement;
+  } | null;
 }
 
 const EditableImage = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -62,6 +69,7 @@ const EditableImage = forwardRef<HTMLDivElement, Props>((props, ref) => {
     focusedInput,
     handleFocusInput,
     handleBlurInput,
+    partnerLogo,
   } = props;
   const { isDarkImage } = useImageColor(src);
   const [imageRef, { width: imageWidth }] = useElementSize();
@@ -125,6 +133,7 @@ const EditableImage = forwardRef<HTMLDivElement, Props>((props, ref) => {
       ) : (
         <DragAndDropFile />
       )}
+      {src && partnerLogo && <PartnerLogo {...partnerLogo} />}
       {inputFields.map(({ direction, offset, position, fields }, index) => {
         const inputFieldGroupDirection =
           direction ?? defaultInputFields[index]?.direction ?? "column";

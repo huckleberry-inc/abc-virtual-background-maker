@@ -11,6 +11,12 @@
     "type": "filesystem",
     "path": "backgrounds"
   },
+  "partnerLogo": {
+    "src": "./shopify-platinum-partner.svg",
+    "alt": "Shopify Platinum Partner",
+    "isVisible": true,
+    "placements": {}
+  },
   "fonts": {
     "sizes": {
       "large": "6rem",
@@ -21,7 +27,10 @@
       "caption": "1.5rem",
       "hb-mini": "0.9rem"
     },
-    "styles": ["LINE Seed", "Montserrat"]
+    "styles": [
+      "LINE Seed",
+      "Montserrat"
+    ]
   },
   "defaultInputFields": [
     {

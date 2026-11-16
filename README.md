@@ -253,6 +253,25 @@ Modify `fonts`'s `sizes` value in `app.config.json`
 
 To change the color of the UI elements such as toggles and buttons, you can add the `keyColor` value in `rrr,ggg,bbb` format in the `app.config.json` file. It fosters a consistent design identity for your team.
 
+### 🏅 Partner Logo (Shopify Platinum Partner)
+
+Add `partnerLogo` to `app.config.json` to show a partner badge on the background. Users can show/hide it and change its position (`Auto` / corners) and size (`Auto` / `small` / `medium` / `large`) from the **Partner Logo** section of the side panel. Remove `partnerLogo` to disable the feature.
+
+```json
+"partnerLogo": {
+  "src": "./shopify-platinum-partner.svg",
+  "alt": "Shopify Platinum Partner",
+  "isVisible": true,
+  "placements": {
+    "office/01.jpg": { "position": "top-right", "size": 0.095 }
+  }
+}
+```
+
+- `public/shopify-platinum-partner.svg` is a **placeholder**. Replace it with the official tier badge SVG downloaded from the Shopify Partner Dashboard. The badge is drawn as-is (no recoloring), following Shopify's rule that tier badges must not be altered.
+- `placements` holds hand-tuned values per background (the key is matched against the end of the background path). `size` is `sqrt(logoWidth * logoHeight) / imageWidth`, so the visual weight stays the same whatever the badge's aspect ratio is.
+- Backgrounds without a tuned value (including uploaded images) are analysed in the browser: the logo goes to the calmest corner that is not used by a text field (top corners are preferred, bottom-left is avoided because meeting apps overlay the participant name there), and it gets larger the emptier that area is.
+
 ### Overriding default values per Theme
 
 You may want to override default values for specific theme. We support this feature by placing **another** `app.config.json` file under `backgrounds` directory.

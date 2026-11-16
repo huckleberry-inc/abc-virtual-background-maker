@@ -18,3 +18,10 @@ export type { FontSize, Font, Alignment } from "./font";
 export type { Image } from "./image";
 export type { InputField, InputFieldGroup } from "./input";
 export type { Theme } from "./theme";
+export { PartnerLogoPositions, PartnerLogoSizes } from "./partnerLogo";
+export type {
+  PartnerLogoConfig,
+  PartnerLogoPlacement,
+  PartnerLogoPosition,
+  PartnerLogoSize,
+} from "./partnerLogo";

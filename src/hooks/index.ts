@@ -22,3 +22,4 @@ export { default as useMediaQuery } from "./useMediaQuery";
 export { default as useTitle } from "./useTitle";
 export { default as useAppConfiguration } from "./useAppConfiguration";
 export { AppProvider } from "./useAppConfiguration/AppContext";
+export { default as usePartnerLogo } from "./usePartnerLogo";
