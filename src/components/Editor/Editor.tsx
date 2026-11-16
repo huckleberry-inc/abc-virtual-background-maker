@@ -41,14 +41,44 @@ import {
   FontSizes,
   InputField,
   InputFieldGroup,
+  PartnerLogoPosition,
+  PartnerLogoPositions,
+  PartnerLogoSize,
+  PartnerLogoSizes,
+  PartnerLogoTone,
+  PartnerLogoTones,
   Theme,
 } from "@/constants";
-import { useAppConfiguration, useImageColor } from "@/hooks";
+import { useAppConfiguration, useImageColor, usePartnerLogo } from "@/hooks";
 import { IconGithub } from "@/icons";
 import { convertRgbToHex } from "@/utils";
 import styles from "./Editor.module.scss";
 
 const DEFAULT_FONT_STYLE = "LINE Seed";
+const AUTO = "auto";
+
+const partnerLogoPositionOptions = [
+  { name: "Auto", value: AUTO },
+  ...(Object.keys(PartnerLogoPositions) as Array<PartnerLogoPosition>).map(
+    (position) => ({ name: PartnerLogoPositions[position], value: position }),
+  ),
+];
+
+const partnerLogoSizeOptions = [
+  { name: "Auto", value: AUTO },
+  ...(Object.keys(PartnerLogoSizes) as Array<PartnerLogoSize>).map((size) => ({
+    name: size,
+    value: size,
+  })),
+];
+
+const partnerLogoToneOptions = [
+  { name: "Auto", value: AUTO },
+  ...(Object.keys(PartnerLogoTones) as Array<PartnerLogoTone>).map((tone) => ({
+    name: PartnerLogoTones[tone],
+    value: tone,
+  })),
+];
 
 const Editor = forwardRef<HTMLDivElement>((_, ref) => {
   const { themes, selectedImage, selectedTheme, defaultInputFields } =
@@ -70,6 +100,55 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
       ?.inputFields as Array<InputFieldGroup>) ?? defaultInputFields;
   const [inputFields, setInputFields] =
     useState<Array<InputFieldGroup>>(initialInputFields);
+  const {
+    config: partnerLogoConfig,
+    aspect: partnerLogoAspect,
+    placement: partnerLogoAutoPlacement,
+    isDarkAt: isPartnerLogoAreaDark,
+  } = usePartnerLogo(
+    src,
+    inputFields.map(({ position }) => position),
+  );
+  const [isPartnerLogoVisible, setIsPartnerLogoVisible] = useState(
+    partnerLogoConfig?.isVisible ?? true,
+  );
+  const [partnerLogoPosition, setPartnerLogoPosition] = useState<
+    PartnerLogoPosition | typeof AUTO
+  >(AUTO);
+  const [partnerLogoSize, setPartnerLogoSize] = useState<
+    PartnerLogoSize | typeof AUTO
+  >(AUTO);
+  const [partnerLogoTone, setPartnerLogoTone] = useState<
+    PartnerLogoTone | typeof AUTO
+  >(AUTO);
+  const partnerLogoPlacement = {
+    position:
+      partnerLogoPosition === AUTO
+        ? partnerLogoAutoPlacement.position
+        : partnerLogoPosition,
+    size:
+      partnerLogoSize === AUTO
+        ? partnerLogoAutoPlacement.size
+        : PartnerLogoSizes[partnerLogoSize],
+  };
+  const resolvedPartnerLogoTone: PartnerLogoTone =
+    partnerLogoTone === AUTO
+      ? isPartnerLogoAreaDark(partnerLogoPlacement)
+        ? "dark"
+        : "light"
+      : partnerLogoTone;
+  const partnerLogo =
+    partnerLogoConfig && isPartnerLogoVisible
+      ? {
+          src:
+            resolvedPartnerLogoTone === "dark" && partnerLogoConfig.srcDark
+              ? partnerLogoConfig.srcDark
+              : partnerLogoConfig.src,
+          alt: partnerLogoConfig.alt,
+          aspect: partnerLogoAspect,
+          placement: partnerLogoPlacement,
+        }
+      : null;
 
   const handleClickGithub = () => {
     window.open(
@@ -128,6 +207,9 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
       );
     });
     setInputOptions(initialOptions);
+    setPartnerLogoPosition(AUTO);
+    setPartnerLogoSize(AUTO);
+    setPartnerLogoTone(AUTO);
   }, [inputFields]);
 
   const handleChangeFontStyle = (style: Font) => {
@@ -231,6 +313,7 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
             focusedInput={focusedInput}
             handleFocusInput={handleFocusInput}
             handleBlurInput={handleBlurInput}
+            partnerLogo={partnerLogo}
           />
         </div>
         <div className={styles.buttons}>
@@ -334,6 +417,67 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
                 ))}
               </ul>
             ))}
+            {partnerLogoConfig && (
+              <>
+                <h3>Partner Logo</h3>
+                <ul>
+                  <li>
+                    <ToggleOption
+                      label={partnerLogoConfig.alt ?? "Partner Logo"}
+                      isSelected={isPartnerLogoVisible}
+                      onClick={() =>
+                        setIsPartnerLogoVisible(!isPartnerLogoVisible)
+                      }
+                    />
+                  </li>
+                  {isPartnerLogoVisible && (
+                    <>
+                      <li className={styles.custom}>
+                        <strong>Position</strong>
+                        <Select
+                          defaultValue={partnerLogoPosition}
+                          value={partnerLogoPosition}
+                          onChange={(position) =>
+                            setPartnerLogoPosition(
+                              position as PartnerLogoPosition | typeof AUTO,
+                            )
+                          }
+                          options={partnerLogoPositionOptions}
+                        />
+                      </li>
+                      <li className={styles.custom}>
+                        <strong>Size</strong>
+                        <Select
+                          defaultValue={partnerLogoSize}
+                          value={partnerLogoSize}
+                          onChange={(size) =>
+                            setPartnerLogoSize(
+                              size as PartnerLogoSize | typeof AUTO,
+                            )
+                          }
+                          options={partnerLogoSizeOptions}
+                        />
+                      </li>
+                      {partnerLogoConfig.srcDark && (
+                        <li className={styles.custom}>
+                          <strong>Color</strong>
+                          <Select
+                            defaultValue={partnerLogoTone}
+                            value={partnerLogoTone}
+                            onChange={(tone) =>
+                              setPartnerLogoTone(
+                                tone as PartnerLogoTone | typeof AUTO,
+                              )
+                            }
+                            options={partnerLogoToneOptions}
+                          />
+                        </li>
+                      )}
+                    </>
+                  )}
+                </ul>
+              </>
+            )}
             <h3>Image Option</h3>
             <ul>
               <li>

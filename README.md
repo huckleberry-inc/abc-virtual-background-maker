@@ -253,6 +253,29 @@ Modify `fonts`'s `sizes` value in `app.config.json`
 
 To change the color of the UI elements such as toggles and buttons, you can add the `keyColor` value in `rrr,ggg,bbb` format in the `app.config.json` file. It fosters a consistent design identity for your team.
 
+### 🏅 Partner Logo (Shopify Platinum Partner)
+
+Add `partnerLogo` to `app.config.json` to show a partner badge on the background. Users can show/hide it and change its position (`Auto` / corners) and size (`Auto` / `small` / `medium` / `large`) from the **Partner Logo** section of the side panel. Remove `partnerLogo` to disable the feature.
+
+```json
+"partnerLogo": {
+  "src": "./shopify-platinum-partner.svg",
+  "srcDark": "./shopify-platinum-partner-dark.svg",
+  "alt": "Shopify Platinum Partner",
+  "isVisible": true,
+  "avoid": { "hb": ["top-left", "bottom-left"] },
+  "placements": {
+    "HB-2024-2/01.255,255,255.png": { "position": "top-right", "size": 0.1 }
+  }
+}
+```
+
+- `public/shopify-platinum-partner.svg` is a "PLATINUM PARTNER" logo made from the Shopify bag icon (text outlined from LINE Seed, on a white rounded tile so it stays legible on dark backgrounds). To use the official tier badge from the Shopify Partner Dashboard instead, replace the file (or change `src`); any aspect ratio works. The logo is drawn as-is (no recoloring).
+- `srcDark` is the variant for dark backgrounds (white text, no tile). With **Color: Auto** the app measures the brightness of the background under the logo and uses `srcDark` when it is dark; **Light** / **Dark** force a variant. Without `srcDark` the Color option is hidden.
+- `placements` holds hand-tuned values per background (the key is matched against the end of the background path). `size` is `sqrt(logoWidth * logoHeight) / imageWidth`, so the visual weight stays the same whatever the badge's aspect ratio is.
+- `avoid` lists corners to keep free for text field groups with custom positions. The key is matched against the start of the group `position`, so `"hb"` covers `hb`, `hb-2024-1`, `hb-2027-2`, ... (all of which put text on the left).
+- Backgrounds without a tuned value (including uploaded images) are analysed in the browser: the logo goes to the calmest corner that is not used by a text field (top corners are preferred, bottom-left is avoided because meeting apps overlay the participant name there), and it gets larger the emptier that area is.
+
 ### Overriding default values per Theme
 
 You may want to override default values for specific theme. We support this feature by placing **another** `app.config.json` file under `backgrounds` directory.

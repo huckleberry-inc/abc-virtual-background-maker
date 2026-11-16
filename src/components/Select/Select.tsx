@@ -60,7 +60,10 @@ const Select = (props: Props) => {
         className={`${styles.button} ${showOptions ? styles.focused : ""}`}
         onClick={() => setShowOptions(!showOptions)}
       >
-        {value ?? defaultValue}
+        {options.find((option) => option.value === (value ?? defaultValue))
+          ?.name ??
+          value ??
+          defaultValue}
         <span className={`material-symbols-outlined ${styles.icon}`}>
           expand_more
         </span>
