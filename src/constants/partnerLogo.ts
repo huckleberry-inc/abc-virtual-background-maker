@@ -8,9 +8,9 @@ export const PartnerLogoPositions = {
 export type PartnerLogoPosition = keyof typeof PartnerLogoPositions;
 
 export const PartnerLogoSizes = {
-  small: 0.07,
-  medium: 0.08,
-  large: 0.095,
+  small: 0.09,
+  medium: 0.105,
+  large: 0.12,
 } as const;
 
 export type PartnerLogoSize = keyof typeof PartnerLogoSizes;
@@ -27,17 +27,29 @@ export interface PartnerLogoPlacement {
 }
 
 export const PartnerLogoTones = {
-  light: "Light",
-  dark: "Dark",
+  light: "Black",
+  dark: "White",
+  plate: "White plate",
 } as const;
 
-/** "light" = for light backgrounds (dark text on a white tile), "dark" = light text. */
+/**
+ * Which badge variant is drawn:
+ * "light" = black badge for light backgrounds (`src`),
+ * "dark" = white badge for dark backgrounds (`srcDark`),
+ * "plate" = badge on its own white plate for busy / mid-tone backgrounds
+ * where neither of the transparent ones has enough contrast (`srcPlate`).
+ */
 export type PartnerLogoTone = keyof typeof PartnerLogoTones;
 
 export interface PartnerLogoConfig {
   src: string;
-  /** Variant for dark backgrounds (light text). Falls back to `src`. */
+  /** Variant for dark backgrounds (white badge). Falls back to `src`. */
   srcDark?: string;
+  /**
+   * Variant on a white plate, for busy or mid-tone backgrounds where neither
+   * `src` nor `srcDark` has enough contrast. Falls back to `src` / `srcDark`.
+   */
+  srcPlate?: string;
   alt?: string;
   isVisible?: boolean;
   /**

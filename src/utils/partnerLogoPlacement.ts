@@ -7,6 +7,7 @@
 import type {
   PartnerLogoPlacement,
   PartnerLogoPosition,
+  PartnerLogoTone,
 } from "@/constants/partnerLogo";
 
 /** Output frame aspect ratio (the editor is fixed to 16:9). */
@@ -18,8 +19,8 @@ export const PARTNER_LOGO_INSET = { x: 0.04, y: 0.064 };
 /** Clear space kept around the logo, as a fraction of the logo height. */
 const CLEAR_SPACE = 0.35;
 
-const MIN_SIZE = 0.07;
-const MAX_SIZE = 0.1;
+const MIN_SIZE = 0.09;
+const MAX_SIZE = 0.12;
 
 /** Calmness thresholds: below LOW the area is treated as empty wall/sky. */
 const BUSY_LOW = 0.06;
@@ -197,26 +198,77 @@ export const suggestPartnerLogoPlacement = (
   return { placement: { position: best.position, size }, scores };
 };
 
-/** Mean luminance (0-1) of the background inside `rect`. */
-export const getRegionLuminance = (
+/** sRGB channel (0-255) to linear light (0-1), as in WCAG relative luminance. */
+const toLinear = (channel: number) => {
+  const c = channel / 255;
+  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+};
+
+/** WCAG contrast ratio against a black / white badge for a luminance (0-1). */
+const contrastWithBlack = (luminance: number) => (luminance + 0.05) / 0.05;
+const contrastWithWhite = (luminance: number) => 1.05 / (luminance + 0.05);
+
+/** Contrast the badge needs against the background on average (WCAG AA). */
+const MIN_MEAN_CONTRAST = 7;
+/** A pixel below this contrast counts as one the badge would blend into. */
+const LOW_CONTRAST = 4.5;
+/** Above this share of low-contrast pixels the area is too busy for a bare badge. */
+const MAX_LOW_CONTRAST_SHARE = 0.12;
+
+export interface PartnerLogoToneOptions {
+  /** Whether a white badge (`srcDark`) is available. */
+  hasDark?: boolean;
+  /** Whether a badge on a white plate (`srcPlate`) is available. */
+  hasPlate?: boolean;
+}
+
+/**
+ * Picks the badge variant for the background inside `rect`.
+ *
+ * The black or white badge is chosen by which has the higher WCAG contrast
+ * against the mean relative luminance of the area (so e.g. a saturated
+ * orange gets the black badge). When even the better one is under AA on
+ * average, or too many pixels (window frames, foliage, artwork) would blend
+ * into it, the badge on its white plate is used instead.
+ */
+export const choosePartnerLogoTone = (
   { width, height, data }: PixelGrid,
   rect: LogoRect,
-): number => {
+  { hasDark = true, hasPlate = false }: PartnerLogoToneOptions = {},
+): PartnerLogoTone => {
   const x0 = Math.max(0, Math.floor(rect.left * width));
   const x1 = Math.min(width, Math.ceil((rect.left + rect.width) * width));
   const y0 = Math.max(0, Math.floor(rect.top * height));
   const y1 = Math.min(height, Math.ceil((rect.top + rect.height) * height));
-  let sum = 0;
-  let count = 0;
+  const luminances: Array<number> = [];
   for (let y = y0; y < y1; y++) {
     for (let x = x0; x < x1; x++) {
       const i = (y * width + x) * 4;
-      sum +=
-        (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
-      count++;
+      luminances.push(
+        0.2126 * toLinear(data[i]) +
+          0.7152 * toLinear(data[i + 1]) +
+          0.0722 * toLinear(data[i + 2]),
+      );
     }
   }
-  return count > 0 ? sum / count : 1;
+  if (luminances.length === 0) {
+    return "light";
+  }
+  const mean = luminances.reduce((sum, l) => sum + l, 0) / luminances.length;
+  const tone: PartnerLogoTone =
+    hasDark && contrastWithWhite(mean) > contrastWithBlack(mean)
+      ? "dark"
+      : "light";
+  if (!hasPlate) {
+    return tone;
+  }
+  const contrast = tone === "dark" ? contrastWithWhite : contrastWithBlack;
+  const lowShare =
+    luminances.filter((l) => contrast(l) < LOW_CONTRAST).length /
+    luminances.length;
+  return contrast(mean) < MIN_MEAN_CONTRAST || lowShare > MAX_LOW_CONTRAST_SHARE
+    ? "plate"
+    : tone;
 };
 
 /** Finds a hand-tuned placement whose key matches the end of the src. */

@@ -41,6 +41,7 @@ import {
   FontSizes,
   InputField,
   InputFieldGroup,
+  PartnerLogoConfig,
   PartnerLogoPosition,
   PartnerLogoPositions,
   PartnerLogoSize,
@@ -72,13 +73,23 @@ const partnerLogoSizeOptions = [
   })),
 ];
 
-const partnerLogoToneOptions = [
+/** Variants that have their own file in the config (`light` always has `src`). */
+const getPartnerLogoToneOptions = (config?: PartnerLogoConfig) => [
   { name: "Auto", value: AUTO },
-  ...(Object.keys(PartnerLogoTones) as Array<PartnerLogoTone>).map((tone) => ({
-    name: PartnerLogoTones[tone],
-    value: tone,
-  })),
+  ...(Object.keys(PartnerLogoTones) as Array<PartnerLogoTone>)
+    .filter(
+      (tone) =>
+        tone === "light" ||
+        (tone === "dark" && config?.srcDark) ||
+        (tone === "plate" && config?.srcPlate),
+    )
+    .map((tone) => ({ name: PartnerLogoTones[tone], value: tone })),
 ];
+
+const getPartnerLogoSrc = (config: PartnerLogoConfig, tone: PartnerLogoTone) =>
+  (tone === "plate" ? config.srcPlate : undefined) ??
+  (tone === "dark" ? config.srcDark : undefined) ??
+  config.src;
 
 const Editor = forwardRef<HTMLDivElement>((_, ref) => {
   const { themes, selectedImage, selectedTheme, defaultInputFields } =
@@ -104,7 +115,7 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
     config: partnerLogoConfig,
     aspect: partnerLogoAspect,
     placement: partnerLogoAutoPlacement,
-    isDarkAt: isPartnerLogoAreaDark,
+    toneAt: getPartnerLogoToneAt,
   } = usePartnerLogo(
     src,
     inputFields.map(({ position }) => position),
@@ -133,17 +144,12 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
   };
   const resolvedPartnerLogoTone: PartnerLogoTone =
     partnerLogoTone === AUTO
-      ? isPartnerLogoAreaDark(partnerLogoPlacement)
-        ? "dark"
-        : "light"
+      ? getPartnerLogoToneAt(partnerLogoPlacement)
       : partnerLogoTone;
   const partnerLogo =
     partnerLogoConfig && isPartnerLogoVisible
       ? {
-          src:
-            resolvedPartnerLogoTone === "dark" && partnerLogoConfig.srcDark
-              ? partnerLogoConfig.srcDark
-              : partnerLogoConfig.src,
+          src: getPartnerLogoSrc(partnerLogoConfig, resolvedPartnerLogoTone),
           alt: partnerLogoConfig.alt,
           aspect: partnerLogoAspect,
           placement: partnerLogoPlacement,
@@ -458,7 +464,8 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
                           options={partnerLogoSizeOptions}
                         />
                       </li>
-                      {partnerLogoConfig.srcDark && (
+                      {(partnerLogoConfig.srcDark ||
+                        partnerLogoConfig.srcPlate) && (
                         <li className={styles.custom}>
                           <strong>Color</strong>
                           <Select
@@ -469,7 +476,9 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
                                 tone as PartnerLogoTone | typeof AUTO,
                               )
                             }
-                            options={partnerLogoToneOptions}
+                            options={getPartnerLogoToneOptions(
+                              partnerLogoConfig,
+                            )}
                           />
                         </li>
                       )}

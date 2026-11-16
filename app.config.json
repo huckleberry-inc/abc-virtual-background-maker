@@ -14,6 +14,7 @@
   "partnerLogo": {
     "src": "./shopify-platinum-partner.svg",
     "srcDark": "./shopify-platinum-partner-dark.svg",
+    "srcPlate": "./shopify-platinum-partner-plate.svg",
     "alt": "Shopify Platinum Partner",
     "isVisible": true,
     "avoid": {
@@ -25,139 +26,139 @@
     "placements": {
       "HB-2024-1/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/02.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/03.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/04.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/05.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/06.255,255,255.png": {
         "position": "bottom-right",
-        "size": 0.07
+        "size": 0.1
       },
       "HB-2024-1/07.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/08.86,86,86.png": {
         "position": "bottom-right",
-        "size": 0.07
+        "size": 0.1
       },
       "HB-2024-1/09.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/10.255,255,255.png": {
         "position": "bottom-right",
-        "size": 0.07
+        "size": 0.1
       },
       "HB-2024-1/11.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-1/12.86,86,86.png": {
         "position": "bottom-right",
-        "size": 0.07
+        "size": 0.1
       },
       "HB-2024-2/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-2/02.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-2/03.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2024-2/04.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-1/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-1/02.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-1/03.255,255,255.png": {
         "position": "bottom-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-1/04.86,86,86.png": {
         "position": "bottom-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-1/05.255,255,255.png": {
         "position": "bottom-right",
-        "size": 0.07
+        "size": 0.1
       },
       "HB-2025-1/06.86,86,86.png": {
         "position": "bottom-right",
-        "size": 0.07
+        "size": 0.1
       },
       "HB-2025-2/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-2/02.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-3/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2025-3/02.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2027-1/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2027-1/02.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2027-1/03.255,255,255.png": {
         "position": "bottom-right",
-        "size": 0.08
+        "size": 0.1
       },
       "HB-2027-1/04.86,86,86.png": {
         "position": "bottom-right",
-        "size": 0.08
+        "size": 0.1
       },
       "HB-2027-2/01.255,255,255.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB-2027-2/02.86,86,86.png": {
         "position": "top-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB/01.png": {
         "position": "bottom-right",
-        "size": 0.1
+        "size": 0.12
       },
       "HB/02.png": {
         "position": "bottom-right",
-        "size": 0.1
+        "size": 0.12
       }
     }
   },
