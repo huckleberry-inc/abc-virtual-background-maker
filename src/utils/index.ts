@@ -17,8 +17,8 @@ export { convertRgbToHex } from "./convertRgbToHex";
 export { convertHexToRgb } from "./convertHexToRgb";
 export { readConfigurationFromGithub } from "./readConfigurationFromGithub";
 export {
+  choosePartnerLogoTone,
   findPartnerLogoPlacement,
   getPartnerLogoRect,
-  getRegionLuminance,
   suggestPartnerLogoPlacement,
 } from "./partnerLogoPlacement";

@@ -5,11 +5,12 @@ import {
   PartnerLogoConfig,
   PartnerLogoPlacement,
   PartnerLogoSizes,
+  PartnerLogoTone,
 } from "@/constants";
 import {
+  choosePartnerLogoTone,
   findPartnerLogoPlacement,
   getPartnerLogoRect,
-  getRegionLuminance,
   suggestPartnerLogoPlacement,
 } from "@/utils";
 import { PARTNER_LOGO_CANDIDATES } from "@/utils/partnerLogoPlacement";
@@ -17,9 +18,8 @@ import { PARTNER_LOGO_CANDIDATES } from "@/utils/partnerLogoPlacement";
 /** Resolution used for analysing the background (16:9). */
 const GRID_WIDTH = 160;
 const GRID_HEIGHT = 90;
-const DEFAULT_ASPECT = 2.815;
-/** Below this mean luminance (0-1) the logo area counts as dark. */
-const DARK_LUMINANCE = 0.45;
+/** Aspect ratio of the official tier badge artwork (285 x 116). */
+const DEFAULT_ASPECT = 285 / 116;
 
 export const partnerLogoConfig = (config as { partnerLogo?: PartnerLogoConfig })
   .partnerLogo;
@@ -81,8 +81,8 @@ const getOccupiedCorners = (textPositions: Array<string>) => {
  * Resolves the best placement of the partner logo for a background:
  * a hand-tuned placement from the config when there is one, otherwise an
  * automatic one from analysing the image (works for uploaded images too).
- * Also tells whether the area under the logo is dark, so the dark variant
- * (light text, no tile) can be used there.
+ * Also picks the badge variant (black / white / on a white plate) that reads
+ * best on the area under the logo.
  */
 const usePartnerLogo = (src: string, textPositions: Array<string>) => {
   const [aspect, setAspect] = useState(DEFAULT_ASPECT);
@@ -164,12 +164,15 @@ const usePartnerLogo = (src: string, textPositions: Array<string>) => {
     return tunedIsUsable ? { ...suggested, ...tuned } : suggested;
   }, [src, occupiedKey, grid, gridFailed, aspect, fallback]);
 
-  /** Whether the background under the logo at `target` is dark. */
-  const isDarkAt = useCallback(
-    (target: PartnerLogoPlacement) =>
-      grid !== null &&
-      getRegionLuminance(grid, getPartnerLogoRect(target, aspect)) <
-        DARK_LUMINANCE,
+  /** Badge variant that reads best on the background under `target`. */
+  const toneAt = useCallback(
+    (target: PartnerLogoPlacement): PartnerLogoTone =>
+      grid === null
+        ? "light"
+        : choosePartnerLogoTone(grid, getPartnerLogoRect(target, aspect), {
+            hasDark: Boolean(partnerLogoConfig?.srcDark),
+            hasPlate: Boolean(partnerLogoConfig?.srcPlate),
+          }),
     [grid, aspect],
   );
 
@@ -177,7 +180,7 @@ const usePartnerLogo = (src: string, textPositions: Array<string>) => {
     config: partnerLogoConfig,
     aspect,
     placement: placement ?? fallback,
-    isDarkAt,
+    toneAt,
   };
 };
 
