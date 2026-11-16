@@ -35,4 +35,10 @@ export interface PartnerLogoConfig {
    * the background `src` (e.g. "office/01.jpg").
    */
   placements?: Record<string, Partial<PartnerLogoPlacement>>;
+  /**
+   * Corners to keep free for text field groups with custom positions.
+   * The key is matched against the start of the group `position`
+   * (e.g. "hb" covers "hb", "hb-2024-1", ...).
+   */
+  avoid?: Record<string, Array<PartnerLogoPosition>>;
 }

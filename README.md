@@ -262,14 +262,16 @@ Add `partnerLogo` to `app.config.json` to show a partner badge on the background
   "src": "./shopify-platinum-partner.svg",
   "alt": "Shopify Platinum Partner",
   "isVisible": true,
+  "avoid": { "hb": ["top-left", "bottom-left"] },
   "placements": {
-    "office/01.jpg": { "position": "top-right", "size": 0.095 }
+    "HB-2024-2/01.255,255,255.png": { "position": "top-right", "size": 0.1 }
   }
 }
 ```
 
 - `public/shopify-platinum-partner.svg` is a "PLATINUM PARTNER" logo made from the Shopify bag icon (text outlined from LINE Seed, on a white rounded tile so it stays legible on dark backgrounds). To use the official tier badge from the Shopify Partner Dashboard instead, replace the file (or change `src`); any aspect ratio works. The logo is drawn as-is (no recoloring).
 - `placements` holds hand-tuned values per background (the key is matched against the end of the background path). `size` is `sqrt(logoWidth * logoHeight) / imageWidth`, so the visual weight stays the same whatever the badge's aspect ratio is.
+- `avoid` lists corners to keep free for text field groups with custom positions. The key is matched against the start of the group `position`, so `"hb"` covers `hb`, `hb-2024-1`, `hb-2027-2`, ... (all of which put text on the left).
 - Backgrounds without a tuned value (including uploaded images) are analysed in the browser: the logo goes to the calmest corner that is not used by a text field (top corners are preferred, bottom-left is avoided because meeting apps overlay the participant name there), and it gets larger the emptier that area is.
 
 ### Overriding default values per Theme

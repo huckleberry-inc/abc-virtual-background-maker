@@ -52,14 +52,33 @@ const readGrid = (img: HTMLImageElement) => {
 };
 
 /**
+ * Corners the logo must not use because text fields sit there. A text field
+ * group on a corner blocks that corner; custom positions (e.g. "hb-2025-1")
+ * block the corners listed in `partnerLogo.avoid` under a matching prefix.
+ */
+const getOccupiedCorners = (textPositions: Array<string>) => {
+  const avoid = partnerLogoConfig?.avoid ?? {};
+  const corners = new Set<string>();
+  textPositions.forEach((position) => {
+    if ((PARTNER_LOGO_CANDIDATES as Array<string>).includes(position)) {
+      corners.add(position);
+    }
+    Object.entries(avoid)
+      .filter(([prefix]) => position.startsWith(prefix))
+      .forEach(([, blocked]) => blocked.forEach((c) => corners.add(c)));
+  });
+  return [...corners].sort();
+};
+
+/**
  * Resolves the best placement of the partner logo for a background:
  * a hand-tuned placement from the config when there is one, otherwise an
  * automatic one from analysing the image (works for uploaded images too).
  */
-const usePartnerLogo = (src: string, occupied: Array<string>) => {
+const usePartnerLogo = (src: string, textPositions: Array<string>) => {
   const [aspect, setAspect] = useState(DEFAULT_ASPECT);
   const [placement, setPlacement] = useState<PartnerLogoPlacement | null>(null);
-  const occupiedKey = occupied.join(",");
+  const occupiedKey = getOccupiedCorners(textPositions).join(",");
 
   useEffect(() => {
     if (!partnerLogoConfig?.src) {
