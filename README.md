@@ -268,7 +268,7 @@ Add `partnerLogo` to `app.config.json` to show a partner badge on the background
 }
 ```
 
-- `public/shopify-platinum-partner.svg` is a **placeholder**. Replace it with the official tier badge SVG downloaded from the Shopify Partner Dashboard. The badge is drawn as-is (no recoloring), following Shopify's rule that tier badges must not be altered.
+- `public/shopify-platinum-partner.svg` is a "PLATINUM PARTNER" logo made from the Shopify bag icon (text outlined from LINE Seed, on a white rounded tile so it stays legible on dark backgrounds). To use the official tier badge from the Shopify Partner Dashboard instead, replace the file (or change `src`); any aspect ratio works. The logo is drawn as-is (no recoloring).
 - `placements` holds hand-tuned values per background (the key is matched against the end of the background path). `size` is `sqrt(logoWidth * logoHeight) / imageWidth`, so the visual weight stays the same whatever the badge's aspect ratio is.
 - Backgrounds without a tuned value (including uploaded images) are analysed in the browser: the logo goes to the calmest corner that is not used by a text field (top corners are preferred, bottom-left is avoided because meeting apps overlay the participant name there), and it gets larger the emptier that area is.
 
