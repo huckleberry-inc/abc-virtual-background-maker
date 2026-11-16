@@ -45,6 +45,8 @@ import {
   PartnerLogoPositions,
   PartnerLogoSize,
   PartnerLogoSizes,
+  PartnerLogoTone,
+  PartnerLogoTones,
   Theme,
 } from "@/constants";
 import { useAppConfiguration, useImageColor, usePartnerLogo } from "@/hooks";
@@ -67,6 +69,14 @@ const partnerLogoSizeOptions = [
   ...(Object.keys(PartnerLogoSizes) as Array<PartnerLogoSize>).map((size) => ({
     name: size,
     value: size,
+  })),
+];
+
+const partnerLogoToneOptions = [
+  { name: "Auto", value: AUTO },
+  ...(Object.keys(PartnerLogoTones) as Array<PartnerLogoTone>).map((tone) => ({
+    name: PartnerLogoTones[tone],
+    value: tone,
   })),
 ];
 
@@ -94,6 +104,7 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
     config: partnerLogoConfig,
     aspect: partnerLogoAspect,
     placement: partnerLogoAutoPlacement,
+    isDarkAt: isPartnerLogoAreaDark,
   } = usePartnerLogo(
     src,
     inputFields.map(({ position }) => position),
@@ -107,22 +118,35 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
   const [partnerLogoSize, setPartnerLogoSize] = useState<
     PartnerLogoSize | typeof AUTO
   >(AUTO);
+  const [partnerLogoTone, setPartnerLogoTone] = useState<
+    PartnerLogoTone | typeof AUTO
+  >(AUTO);
+  const partnerLogoPlacement = {
+    position:
+      partnerLogoPosition === AUTO
+        ? partnerLogoAutoPlacement.position
+        : partnerLogoPosition,
+    size:
+      partnerLogoSize === AUTO
+        ? partnerLogoAutoPlacement.size
+        : PartnerLogoSizes[partnerLogoSize],
+  };
+  const resolvedPartnerLogoTone: PartnerLogoTone =
+    partnerLogoTone === AUTO
+      ? isPartnerLogoAreaDark(partnerLogoPlacement)
+        ? "dark"
+        : "light"
+      : partnerLogoTone;
   const partnerLogo =
     partnerLogoConfig && isPartnerLogoVisible
       ? {
-          src: partnerLogoConfig.src,
+          src:
+            resolvedPartnerLogoTone === "dark" && partnerLogoConfig.srcDark
+              ? partnerLogoConfig.srcDark
+              : partnerLogoConfig.src,
           alt: partnerLogoConfig.alt,
           aspect: partnerLogoAspect,
-          placement: {
-            position:
-              partnerLogoPosition === AUTO
-                ? partnerLogoAutoPlacement.position
-                : partnerLogoPosition,
-            size:
-              partnerLogoSize === AUTO
-                ? partnerLogoAutoPlacement.size
-                : PartnerLogoSizes[partnerLogoSize],
-          },
+          placement: partnerLogoPlacement,
         }
       : null;
 
@@ -185,6 +209,7 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
     setInputOptions(initialOptions);
     setPartnerLogoPosition(AUTO);
     setPartnerLogoSize(AUTO);
+    setPartnerLogoTone(AUTO);
   }, [inputFields]);
 
   const handleChangeFontStyle = (style: Font) => {
@@ -433,6 +458,21 @@ const Editor = forwardRef<HTMLDivElement>((_, ref) => {
                           options={partnerLogoSizeOptions}
                         />
                       </li>
+                      {partnerLogoConfig.srcDark && (
+                        <li className={styles.custom}>
+                          <strong>Color</strong>
+                          <Select
+                            defaultValue={partnerLogoTone}
+                            value={partnerLogoTone}
+                            onChange={(tone) =>
+                              setPartnerLogoTone(
+                                tone as PartnerLogoTone | typeof AUTO,
+                              )
+                            }
+                            options={partnerLogoToneOptions}
+                          />
+                        </li>
+                      )}
                     </>
                   )}
                 </ul>

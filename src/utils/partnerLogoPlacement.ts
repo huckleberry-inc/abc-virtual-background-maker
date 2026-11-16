@@ -197,6 +197,28 @@ export const suggestPartnerLogoPlacement = (
   return { placement: { position: best.position, size }, scores };
 };
 
+/** Mean luminance (0-1) of the background inside `rect`. */
+export const getRegionLuminance = (
+  { width, height, data }: PixelGrid,
+  rect: LogoRect,
+): number => {
+  const x0 = Math.max(0, Math.floor(rect.left * width));
+  const x1 = Math.min(width, Math.ceil((rect.left + rect.width) * width));
+  const y0 = Math.max(0, Math.floor(rect.top * height));
+  const y1 = Math.min(height, Math.ceil((rect.top + rect.height) * height));
+  let sum = 0;
+  let count = 0;
+  for (let y = y0; y < y1; y++) {
+    for (let x = x0; x < x1; x++) {
+      const i = (y * width + x) * 4;
+      sum +=
+        (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+      count++;
+    }
+  }
+  return count > 0 ? sum / count : 1;
+};
+
 /** Finds a hand-tuned placement whose key matches the end of the src. */
 export const findPartnerLogoPlacement = (
   src: string,

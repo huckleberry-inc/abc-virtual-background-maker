@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import config from "~/output.config.json";
 
 import {
@@ -6,13 +6,20 @@ import {
   PartnerLogoPlacement,
   PartnerLogoSizes,
 } from "@/constants";
-import { findPartnerLogoPlacement, suggestPartnerLogoPlacement } from "@/utils";
+import {
+  findPartnerLogoPlacement,
+  getPartnerLogoRect,
+  getRegionLuminance,
+  suggestPartnerLogoPlacement,
+} from "@/utils";
 import { PARTNER_LOGO_CANDIDATES } from "@/utils/partnerLogoPlacement";
 
 /** Resolution used for analysing the background (16:9). */
 const GRID_WIDTH = 160;
 const GRID_HEIGHT = 90;
 const DEFAULT_ASPECT = 2.81;
+/** Below this mean luminance (0-1) the logo area counts as dark. */
+const DARK_LUMINANCE = 0.45;
 
 export const partnerLogoConfig = (config as { partnerLogo?: PartnerLogoConfig })
   .partnerLogo;
@@ -74,10 +81,13 @@ const getOccupiedCorners = (textPositions: Array<string>) => {
  * Resolves the best placement of the partner logo for a background:
  * a hand-tuned placement from the config when there is one, otherwise an
  * automatic one from analysing the image (works for uploaded images too).
+ * Also tells whether the area under the logo is dark, so the dark variant
+ * (light text, no tile) can be used there.
  */
 const usePartnerLogo = (src: string, textPositions: Array<string>) => {
   const [aspect, setAspect] = useState(DEFAULT_ASPECT);
-  const [placement, setPlacement] = useState<PartnerLogoPlacement | null>(null);
+  const [grid, setGrid] = useState<ImageData | null>(null);
+  const [gridFailed, setGridFailed] = useState(false);
   const occupiedKey = getOccupiedCorners(textPositions).join(",");
 
   useEffect(() => {
@@ -97,6 +107,30 @@ const usePartnerLogo = (src: string, textPositions: Array<string>) => {
     };
   }, []);
 
+  useEffect(() => {
+    setGrid(null);
+    setGridFailed(false);
+    if (!partnerLogoConfig || !src) {
+      return;
+    }
+    let ignore = false;
+    loadImage(src)
+      .then((img) => {
+        if (!ignore) {
+          const data = readGrid(img);
+          setGrid(data);
+          setGridFailed(!data);
+        }
+      })
+      .catch(() => {
+        // e.g. a cross-origin image without CORS headers
+        !ignore && setGridFailed(true);
+      });
+    return () => {
+      ignore = true;
+    };
+  }, [src]);
+
   const fallback = useMemo<PartnerLogoPlacement>(() => {
     const blocked = occupiedKey.split(",");
     return {
@@ -108,47 +142,42 @@ const usePartnerLogo = (src: string, textPositions: Array<string>) => {
     };
   }, [occupiedKey]);
 
-  useEffect(() => {
+  const placement = useMemo<PartnerLogoPlacement | null>(() => {
     if (!partnerLogoConfig || !src) {
-      setPlacement(null);
-      return;
+      return null;
     }
     const blocked = occupiedKey.split(",");
     const tuned = findPartnerLogoPlacement(src, partnerLogoConfig.placements);
     const tunedIsUsable =
       tuned?.position !== undefined && !blocked.includes(tuned.position);
     if (tunedIsUsable && tuned?.size !== undefined) {
-      setPlacement(tuned as PartnerLogoPlacement);
-      return;
+      return tuned as PartnerLogoPlacement;
     }
+    if (!grid) {
+      return gridFailed ? fallback : null;
+    }
+    const { placement: suggested } = suggestPartnerLogoPlacement(
+      grid,
+      aspect,
+      blocked,
+    );
+    return tunedIsUsable ? { ...suggested, ...tuned } : suggested;
+  }, [src, occupiedKey, grid, gridFailed, aspect, fallback]);
 
-    let ignore = false;
-    loadImage(src)
-      .then((img) => {
-        const grid = readGrid(img);
-        if (ignore || !grid) {
-          return;
-        }
-        const { placement: suggested } = suggestPartnerLogoPlacement(
-          grid,
-          aspect,
-          blocked,
-        );
-        setPlacement(tunedIsUsable ? { ...suggested, ...tuned } : suggested);
-      })
-      .catch(() => {
-        // e.g. a cross-origin image without CORS headers
-        !ignore && setPlacement(fallback);
-      });
-    return () => {
-      ignore = true;
-    };
-  }, [src, occupiedKey, aspect, fallback]);
+  /** Whether the background under the logo at `target` is dark. */
+  const isDarkAt = useCallback(
+    (target: PartnerLogoPlacement) =>
+      grid !== null &&
+      getRegionLuminance(grid, getPartnerLogoRect(target, aspect)) <
+        DARK_LUMINANCE,
+    [grid, aspect],
+  );
 
   return {
     config: partnerLogoConfig,
     aspect,
     placement: placement ?? fallback,
+    isDarkAt,
   };
 };
 

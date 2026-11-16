@@ -19,5 +19,6 @@ export { readConfigurationFromGithub } from "./readConfigurationFromGithub";
 export {
   findPartnerLogoPlacement,
   getPartnerLogoRect,
+  getRegionLuminance,
   suggestPartnerLogoPlacement,
 } from "./partnerLogoPlacement";

@@ -26,8 +26,18 @@ export interface PartnerLogoPlacement {
   size: number;
 }
 
+export const PartnerLogoTones = {
+  light: "Light",
+  dark: "Dark",
+} as const;
+
+/** "light" = for light backgrounds (dark text on a white tile), "dark" = light text. */
+export type PartnerLogoTone = keyof typeof PartnerLogoTones;
+
 export interface PartnerLogoConfig {
   src: string;
+  /** Variant for dark backgrounds (light text). Falls back to `src`. */
+  srcDark?: string;
   alt?: string;
   isVisible?: boolean;
   /**

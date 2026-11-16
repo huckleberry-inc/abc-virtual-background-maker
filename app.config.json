@@ -13,6 +13,7 @@
   },
   "partnerLogo": {
     "src": "./shopify-platinum-partner.svg",
+    "srcDark": "./shopify-platinum-partner-dark.svg",
     "alt": "Shopify Platinum Partner",
     "isVisible": true,
     "avoid": {
