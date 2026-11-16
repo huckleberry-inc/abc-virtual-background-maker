@@ -17,7 +17,7 @@ import { PARTNER_LOGO_CANDIDATES } from "@/utils/partnerLogoPlacement";
 /** Resolution used for analysing the background (16:9). */
 const GRID_WIDTH = 160;
 const GRID_HEIGHT = 90;
-const DEFAULT_ASPECT = 2.81;
+const DEFAULT_ASPECT = 2.815;
 /** Below this mean luminance (0-1) the logo area counts as dark. */
 const DARK_LUMINANCE = 0.45;
 
